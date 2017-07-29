@@ -5,6 +5,7 @@
 import matplotlib.pyplot as plt
 from scipy import optimize, exp, sqrt, integrate, sin, pi
 import numpy as np
+import json
 
 diff = 0 # 0.01刻みで[-1,1]を動かす
 
@@ -64,10 +65,12 @@ if __name__ == '__main__':
         diff = round(d, 2)
         ratio = calc()
         print "h: %s, ratio: %s" % (diff, ratio)
-        res.append([diff, ratio])
-        res.append([-diff, 1 - ratio])
+        res.append([diff, round(ratio, 4)])
+        res.append([-diff, round(1 - ratio, 4)])
     res.append([1, 1])
     res.append([-1, 0])
     res.append([0, 0.5])
     res = sorted(res, key=lambda x: x[0])
     print res
+    with open("liquid_in_circle.json", 'wb') as outfile:
+        json.dump(res, outfile)
